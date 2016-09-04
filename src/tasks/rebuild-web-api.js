@@ -78,7 +78,11 @@ module.exports = function rebuildWebApi(functionName, functionVersion, restApiId
 					'application/xml': inputTemplate,
 					'text/plain': inputTemplate
 				},
-				uri: 'arn:aws:apigateway:' + awsRegion + ':lambda:path/2015-03-31/functions/arn:aws:lambda:' + awsRegion + ':' + ownerId + ':function:' + functionName + ':${stageVariables.lambdaVersion}/invocations'
+				uri: 'arn:aws:apigateway:' + awsRegion + ':lambda:path/2015-03-31/functions/arn:aws:lambda:' + awsRegion + ':' + ownerId + ':function:' + functionName + ':${stageVariables.lambdaVersion}/invocations',
+				requestParameters: {
+					'integration.request.header.X-Amz-Invocation-Type': 'Event'
+				}
+
 			});
 		},
 		corsHeaderValue = function () {
